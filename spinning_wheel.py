@@ -54,7 +54,6 @@ def set_led_color(color):
 def spin_motor_and_decelerate():
     speed = 65535
     pwm.duty_cycle = speed
-    print("Wheel spinning...")
 
     while speed > 7500:
         pwm.duty_cycle = speed
@@ -62,7 +61,6 @@ def spin_motor_and_decelerate():
         speed = int(speed * 0.95)
 
     pwm.duty_cycle = 0
-    print("Wheel stopped.")
 
 # ---------------- MAIN LOOP -------------------
 
