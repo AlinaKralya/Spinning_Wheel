@@ -40,6 +40,7 @@ in2.value = False
 
 # ---------------- FUNCTIONS -------------------
 
+# Sets different LED colors based on Magnet Position
 def set_led_color(color):
     if color == "green":
         led_red.value = False
@@ -51,13 +52,15 @@ def set_led_color(color):
         led_red.value = False
         led_green.value = False
 
+# Controls the Motor to spin and decelerate
 def spin_motor_and_decelerate():
     speed = 65535
     pwm.duty_cycle = speed
-
+    #7500 the threshold speed
     while speed > 7500:
         pwm.duty_cycle = speed
         time.sleep(0.2)
+        # goes down 5% each time
         speed = int(speed * 0.95)
 
     pwm.duty_cycle = 0
