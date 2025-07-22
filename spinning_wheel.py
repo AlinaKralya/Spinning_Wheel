@@ -52,15 +52,17 @@ time_passed = time.monotonic()
 def spin_motor_and_decelerate():
     speed = 65535
     pwm.duty_cycle = speed
-
+    #threshold speed
     while speed > 7500:
         pwm.duty_cycle = speed
         time.sleep(0.2)
+        # goes down 5%
         speed = int(speed * 0.95)
 
     pwm.duty_cycle = 0
 
 def set_led_color(color):
+# decides which color to change to
     if color == "green":
         led_green.value = True
         led_red.value = False
@@ -84,14 +86,17 @@ while True:
             led_blue.value = False
             time.sleep(0.25)
 
+        # tracks time pressed down on the button
         press_duration = time.monotonic() - press_start
 
+        # this gives you the time duration corresponding to mode
         if press_duration >= 1.0:
             # Roulette mode
             spin_motor_and_decelerate()
 
             time.sleep(1.0)  # give wheel time to settle
-
+            
+            # checks if magnet is aligned and updates LED value
             aligned = hall_sensor.value == 0
             if aligned:
                 set_led_color("green")
